@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    background-image: url(./img/app/background_ball.jpg);
+    background-size: cover;
+    background-position: 44% 50%;
+    background-attachment: fixed;
+}
+
+#card-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+
+/* reusable components */
+
+.card {
+    background-color: gray;
+    width: 100%;
+    height: 155px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 5px 20px 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 225ms ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.2);
+    transition: all 225ms ease-in-out;
+}
+
+.card-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.card-image {
+    height: 75%;
+    object-fit: cover;
+    z-index: 2;
+}
+
+.card-name {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+}
+
+.card-type {
+    margin: 0 0 5px 0;
+    color: white;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 2px 4px 2px 4px;
+    width: 70px;
+    text-align: center;
+}
+
+.ball_background {
+    width: 150px;
+    object-fit: cover;
+    opacity: 0.1;
+    position: absolute;
+    bottom: -24px;
+    right: 0px;
+}
+
+
+/* responsive section */
+@media(min-width:550px) {
+    .card {
+        width: 45%;
+    }
+}
+
+@media(min-width:900px) {
+    .card {
+        width: 30%;
+    }
+}
