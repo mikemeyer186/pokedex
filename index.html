@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="./fonts.css">
     <script src="./main.js"></script>
     <script src="./templates.js"></script>
-    <script src="./pokemonlist.js"></script>
 
     <title>pokedex</title>
 
@@ -20,8 +19,27 @@
 
     <div class="page-wrapper">
 
+        <header>
+            <div class="header-left">
+                <img class="logo" src="./img/app/logo.png" alt="Logo">
+                <p class="logo-text">Pokedex</p>
+            </div>
+            <div class="header-right">
+                <div class="header-searchbar">
+                    <div class="searchbar__box">
+                        <img class="search-icon" src="./img/app/glasses.png" alt="Searchbar">
+                        <input id="searchInput" class="searchbar" type="text" placeholder="Search for names"
+                            onkeyup="searchPostings()">
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <div id="card-content"></div>
 
+        <div id="loading-more">
+            <span>Pokemons werden geladen...</span>
+        </div>
     </div>
 
 </body>
