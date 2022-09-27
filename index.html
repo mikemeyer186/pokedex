@@ -15,7 +15,9 @@
 
 </head>
 
-<body onload="loadPokemon()">
+<body id="page-body" onload="loadPokemon()">
+
+    <div id="detail-content"></div>
 
     <div class="page-wrapper">
 
@@ -38,7 +40,8 @@
         <div id="card-content"></div>
 
         <div id="loading-more">
-            <span>Pokemons werden geladen...</span>
+            <div class="loader"></div>
+            <span>Pokemons werden geladen</span>
         </div>
     </div>
 

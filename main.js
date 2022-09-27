@@ -115,6 +115,10 @@ function matchTypeBackground(type) {
     if (type == 'fairy') {
         return 'rgb(180, 191, 249)';
     }
+
+    if (type == 'normal') {
+        return 'rgb(121, 121, 121)';
+    }
 }
 
 
@@ -147,4 +151,26 @@ function searchPostings() {
         result = pokemons.filter(e => e.name.includes(search));
         renderPokemonCard(result);
     }
+}
+
+
+/**
+ * opening the detail view of pokemon and add overflow:hidden to body
+ */
+function openDetailView(i) {
+    let pokemonType = pokemons[i]['types'][0]['type']['name'];
+    let pokemonImage = pokemons[i]['sprites']['other']['home']['front_default'];
+    let pokemonBg = matchTypeBackground(pokemonType);
+
+    document.getElementById('page-body').classList.add('no-overflow');
+    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(pokemonBg, pokemonImage);
+}
+
+
+/**
+ * closing the detail view and remove overflow:hidden
+ */
+function closeDetailView() {
+    document.getElementById('page-body').classList.remove('no-overflow');
+    document.getElementById('detail-content').innerHTML = '';
 }

@@ -1,15 +1,9 @@
 /**
  * pokemon card template for main content
- * @param {string} pokemonName 
- * @param {path} pokemonImage 
- * @param {color} pokemonBg
- * @param {index} i
- * @param {number} pokemonId
- * @returns html-template
  */
 function cardPokemonTemplate(pokemonName, pokemonImage, pokemonBg, i, pokemonId) {
     return /*html*/`
-        <div class="card" style="background-color:${pokemonBg}">
+        <div class="card" style="background-color:${pokemonBg}" onclick="openDetailView(${i})">
             <div class="card-left">
                 <p class="card-name">${pokemonName}</p>
                 <div id="type-content${i}">
@@ -27,13 +21,28 @@ function cardPokemonTemplate(pokemonName, pokemonImage, pokemonBg, i, pokemonId)
 
 /**
  * pokemon type template for pokemon cards
- * @param {string} typeName 
- * @returns html-template
  */
 function cardTypeTemplate(typeName) {
     return /*html*/`
         <div class="card-type">
             <span>${typeName}</span>
+        </div>
+    `;
+}
+
+
+/**
+ * pokemon detail view template
+ */
+function detailPokemonTemplate(pokemonBg, pokemonImage) {
+    return /*html*/`
+        <div class="detail-bg" onclick="closeDetailView()">
+            <div class="detailPopup" style="background-color:${pokemonBg}">
+                <div class="detail-top">
+                    <img class="detail-image" src="${pokemonImage}" alt="Pokemon-Image">
+                </div>
+                <div class="detail-bottom"></div>
+            </div>
         </div>
     `;
 }
