@@ -31,7 +31,7 @@ body {
 }
 
 header {
-    padding: 5px 10px 5px 5px;
+    padding: 20px 10px 0px 5px;
     z-index: 100;
     display: flex;
     justify-content: space-between;
@@ -100,9 +100,6 @@ header {
     margin-right: 5px;
 }
 
-
-/* reusable components */
-
 .card {
     background-color: rgb(121, 121, 121);
     width: 100%;
@@ -120,8 +117,8 @@ header {
 }
 
 .card:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    transform: scale(1.007);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.008);
     transition: all 225ms ease-in-out;
 }
 
@@ -147,7 +144,6 @@ header {
     font-weight: 600;
     text-align: right;
     z-index: 3;
-
 }
 
 .card-image {
@@ -237,6 +233,9 @@ header {
     -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
     z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .detailPopup {
@@ -249,6 +248,8 @@ header {
     width: 100%;
     display: flex;
     justify-content: center;
+    z-index: 210;
+    position: relative;
 }
 
 .detail-bottom {
@@ -257,14 +258,103 @@ header {
     width: 100%;
     border-top-left-radius: 7%;
     border-top-right-radius: 7%;
+    z-index: 230;
 }
 
 .detail-image {
     width: 270px;
     object-fit: contain;
-    transform: translateY(28%);
+    transform: translateY(15%);
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.6));
 }
 
+.close-icon {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 300;
+    width: 20px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.detail-nav {
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.detail-info {
+    cursor: pointer;
+}
+
+.detail-abilities {
+    cursor: pointer;
+}
+
+.nav-link::after {
+    content: '';
+    display: block;
+    background-color: black;
+    height: 3px;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: transform 225ms ease-in-out;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.underline::after {
+    content: '';
+    display: block;
+    transform: scaleX(1);
+    background-color: black;
+    height: 3px;
+}
+
+.ball-background-detail {
+    width: 150px;
+    object-fit: cover;
+    opacity: 0.1;
+    position: absolute;
+    bottom: -24px;
+    right: 0px;
+    z-index: 220;
+}
+
+.card-id-detail {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.card-name-detail {
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    margin: auto;
+    position: absolute;
+    top: 10px;
+    text-align: center;
+}
+
+.card-name-detail::first-letter {
+    text-transform: capitalize;
+}
+
+.detailsBox {
+    padding: 20px;
+}
 
 /* responsive section */
 
@@ -274,7 +364,19 @@ header {
     }
 
     header {
-        padding: 5px 40px 5px 35px;
+        padding: 20px 40px 0px 35px;
+    }
+
+    .detailPopup {
+        width: 70%;
+        height: 80%;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .detail-bottom {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
     }
 }
 
@@ -286,26 +388,46 @@ header {
     .searchbar__box {
         width: 45vw;
     }
+
+    .detailPopup {
+        width: 50%;
+        height: 80%;
+    }
 }
 
 @media(min-width:900px) {
     header {
-        padding: 5px 45px 5px 40px;
+        padding: 20px 45px 0px 40px;
+    }
+
+    .detailPopup {
+        width: 40%;
+        height: 80%;
     }
 }
 
 @media(min-width:1100px) {
     header {
-        padding: 5px 60px 5px 65px;
+        padding: 20px 60px 0px 65px;
     }
 
     #card-content {
         padding: 20px 10px 10px 10px;
     }
+
+    .detailPopup {
+        width: 30%;
+        height: 80%;
+    }
 }
 
 @media(min-width:1400px) {
     header {
-        padding: 5px 80px 5px 95px;
+        padding: 20px 80px 0px 95px;
+    }
+
+    .detailPopup {
+        width: 25%;
+        height: 80%;
     }
 }

@@ -119,6 +119,8 @@ function matchTypeBackground(type) {
     if (type == 'normal') {
         return 'rgb(121, 121, 121)';
     }
+
+    //psychic, fighting, rock
 }
 
 
@@ -136,7 +138,7 @@ window.onscroll = function (ev) {
 
 
 /**
- * search for id or names on keyup in searchbar
+ * search for names on keyup in searchbar
  */
 function searchPostings() {
     let search = document.getElementById('searchInput');
@@ -160,17 +162,51 @@ function searchPostings() {
 function openDetailView(i) {
     let pokemonType = pokemons[i]['types'][0]['type']['name'];
     let pokemonImage = pokemons[i]['sprites']['other']['home']['front_default'];
+    let pokemonId = pokemons[i]['id'];
+    let pokemonName = pokemons[i]['name'];
+
     let pokemonBg = matchTypeBackground(pokemonType);
 
     document.getElementById('page-body').classList.add('no-overflow');
-    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(pokemonBg, pokemonImage);
+    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName);
 }
 
 
 /**
- * closing the detail view and remove overflow:hidden
+ * closing the detail view and remove overflow:hidden from body
  */
 function closeDetailView() {
     document.getElementById('page-body').classList.remove('no-overflow');
     document.getElementById('detail-content').innerHTML = '';
+}
+
+
+/**
+ * stopping propagation of child elements
+ */
+function stopPropagate(event) {
+    event.stopPropagation();
+}
+
+
+/**
+ * showing selected nav link in details popup
+ */
+function showDetailsBox(object) {
+    document.getElementById('detailsBox-info').classList.add('d-none');
+    document.getElementById('detailsBox-stats').classList.add('d-none');
+    document.getElementById('detailsBox-ability').classList.add('d-none');
+    document.getElementById(`detailsBox-${object}`).classList.remove('d-none');
+    underlineLink(object);
+}
+
+
+/**
+ * underline selected nav link in detaisl popup
+ */
+function underlineLink(object) {
+    document.getElementById('details-nav-info').classList.remove('underline');
+    document.getElementById('details-nav-stats').classList.remove('underline');
+    document.getElementById('details-nav-ability').classList.remove('underline');
+    document.getElementById(`details-nav-${object}`).classList.add('underline');
 }
