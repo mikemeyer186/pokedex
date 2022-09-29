@@ -65,8 +65,6 @@ function renderPokemonCard(pokemons) {
 
 /**
  * rendering pokemon types in single cards
- * @param {array} pokemon 
- * @param {index} i 
  */
 function renderPokemonType(pokemon, i) {
     let typeContent = document.getElementById(`type-content${i}`);
@@ -164,11 +162,14 @@ function openDetailView(i) {
     let pokemonImage = pokemons[i]['sprites']['other']['home']['front_default'];
     let pokemonId = pokemons[i]['id'];
     let pokemonName = pokemons[i]['name'];
-
     let pokemonBg = matchTypeBackground(pokemonType);
-
+    let pokemonXp = pokemons[i]['base_experience'];
+    let pokemonWeight = pokemons[i]['weight'];
+    let pokemonHeight = pokemons[i]['height'];
     document.getElementById('page-body').classList.add('no-overflow');
-    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName);
+    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName, i, pokemonXp, pokemonWeight, pokemonHeight);
+    renderPokemonTypeDetail(pokemons[i], i);
+    fillStatBar(pokemons[i]['stats']);
 }
 
 
@@ -202,11 +203,35 @@ function showDetailsBox(object) {
 
 
 /**
- * underline selected nav link in detaisl popup
+ * underline selected nav link in detail popup
  */
 function underlineLink(object) {
     document.getElementById('details-nav-info').classList.remove('underline');
     document.getElementById('details-nav-stats').classList.remove('underline');
     document.getElementById('details-nav-ability').classList.remove('underline');
     document.getElementById(`details-nav-${object}`).classList.add('underline');
+}
+
+
+/**
+ * rendering pokemon types in detail popup
+ */
+function renderPokemonTypeDetail(pokemon, i) {
+    let typeContent = document.getElementById(`type-content-detail${i}`);
+    let pokemonTypes = pokemon['types'];
+
+    for (let y = 0; y < pokemonTypes.length; y++) {
+        let type = pokemonTypes[y];
+        let typeName = type['type']['name'];
+        typeContent.innerHTML += detailTypeTemplate(typeName);
+    }
+}
+
+
+function fillStatBar(stats) {
+    for (let i = 0; i < stats.length; i++) {
+        let stat = stats[i]['base_stat'];
+        document.getElementById(`stat-bar${i}`).style.width = (stat / 3) + '%';
+        document.getElementById(`stat-text${i}`).innerHTML = `<span>${stat}</span>`;
+    }
 }

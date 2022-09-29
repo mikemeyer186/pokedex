@@ -6,8 +6,7 @@ function cardPokemonTemplate(pokemonName, pokemonImage, pokemonBg, i, pokemonId)
         <div class="card" style="background-color:${pokemonBg}" onclick="openDetailView(${i})">
             <div class="card-left">
                 <p class="card-name">${pokemonName}</p>
-                <div id="type-content${i}">
-                </div>
+                <div id="type-content${i}"></div>
             </div>
             <div class="card-right">
                 <span class="card-id">#${pokemonId}</span>
@@ -32,9 +31,21 @@ function cardTypeTemplate(typeName) {
 
 
 /**
+ * pokemon type template for pokemon detail view
+ */
+function detailTypeTemplate(typeName) {
+    return /*html*/`
+        <div class="card-type-detail">
+            <span>${typeName}</span>
+        </div>
+    `;
+}
+
+
+/**
  * pokemon detail view template
  */
-function detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName) {
+function detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName, i, pokemonXp, pokemonWeight, pokemonHeight) {
     return /*html*/`
         <div class="detail-bg" onclick="closeDetailView()">
             <div class="detailPopup" style="background-color:${pokemonBg}" onclick="stopPropagate(event)">
@@ -51,8 +62,56 @@ function detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName) 
                         <span id="details-nav-stats" class="detail-abilities nav-link" onclick="showDetailsBox('stats')">stats</span>
                         <span id="details-nav-ability" class="detail-abilities nav-link" onclick="showDetailsBox('ability')">abilities</span>
                     </div>
-                    <div class="detailsBox" id="detailsBox-info">Informationen</div>
-                    <div class="detailsBox d-none" id="detailsBox-stats">Statistiken</div>
+                    <div class="detailsBox" id="detailsBox-info">
+                        <table class="table-details">
+                            <tr>
+                                <td class="table-details-name">type(s):</td>
+                                <td class="table-details-amount"><div class="detail-type-box" id="type-content-detail${i}"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name">xp:</td>
+                                <td class="table-details-amount">${pokemonXp}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name">weight:</td>
+                                <td class="table-details-amount">${pokemonWeight}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name">heigth:</td>
+                                <td class="table-details-amount">${pokemonHeight}</td>
+                            </tr>
+                        </table>
+                        
+                    </div>
+                    <div class="detailsBox d-none" id="detailsBox-stats">
+                        <table>
+                            <tr>
+                                <td class="table-details-name smaller-row">hp:</td>
+                                <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar0" class="stat-bar-inner"></div></div><div id="stat-text0" class="stat-text"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name smaller-row">attack:</td>
+                                <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar1" class="stat-bar-inner"></div></div><div id="stat-text1" class="stat-text"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name smaller-row">defense:</td>
+                                <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar2" class="stat-bar-inner"></div></div><div id="stat-text2" class="stat-text"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name smaller-row">special-att.:</td>
+                                <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar3" class="stat-bar-inner"></div></div><div id="stat-text3" class="stat-text"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name smaller-row">special-def.:</td>
+                                <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar4" class="stat-bar-inner"></div></div><div id="stat-text4" class="stat-text"></div></td>
+                            </tr>
+                            <tr>
+                                <td class="table-details-name smaller-row">speed:</td>
+                                <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar5" class="stat-bar-inner"></div></div><div id="stat-text5" class="stat-text"></div></td>
+                            </tr>
+
+                        </table>
+                    </div>
                     <div class="detailsBox d-none" id="detailsBox-ability">Fähigkeiten</div>
                 </div>
             </div>
