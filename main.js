@@ -36,7 +36,6 @@ async function loadMorePokemon() {
 
 /**
  * pushing pokemons in array "pokemons"
- * @param {array} pokemon
  */
 function pushPokemons(pokemon) {
     pokemons.push(pokemon);
@@ -56,8 +55,7 @@ function renderPokemonCard(pokemons) {
         let pokemonId = pokemon['id'];
         let pokemonImage = pokemon['sprites']['other']['home']['front_default'];
         let pokemonType = pokemon['types'][0]['type']['name'];
-        let pokemonBg = matchTypeBackground(pokemonType);
-        cardContent.innerHTML += cardPokemonTemplate(pokemonName, pokemonImage, pokemonBg, i, pokemonId);
+        cardContent.innerHTML += cardPokemonTemplate(pokemonName, pokemonImage, pokemonType, i, pokemonId);
         renderPokemonType(pokemon, i);
     }
 }
@@ -79,52 +77,7 @@ function renderPokemonType(pokemon, i) {
 
 
 /**
- * matching pokemon type with background-image
- */
-function matchTypeBackground(type) {
-    if (type == 'fire') {
-        return 'rgb(250, 109, 112)';
-    }
-
-    if (type == 'grass') {
-        return 'rgb(80, 207, 176)';
-    }
-
-    if (type == 'water') {
-        return 'rgb(121, 191, 251)';
-    }
-
-    if (type == 'electric') {
-        return 'rgb(254, 214, 118)';
-    }
-
-    if (type == 'bug') {
-        return 'rgb(126, 180, 56)';
-    }
-
-    if (type == 'poison') {
-        return 'rgb(115, 80, 134)';
-    }
-
-    if (type == 'ground') {
-        return 'rgb(174, 116, 109)';
-    }
-
-    if (type == 'fairy') {
-        return 'rgb(180, 191, 249)';
-    }
-
-    if (type == 'normal') {
-        return 'rgb(121, 121, 121)';
-    }
-
-    //psychic, fighting, rock
-}
-
-
-/**
  * event when page is scrolled down
- * @param {event} ev 
  */
 window.onscroll = function (ev) {
     if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
@@ -136,7 +89,7 @@ window.onscroll = function (ev) {
 
 
 /**
- * search for names on keyup in searchbar
+ * searching for names on keyup in searchbar
  */
 function searchPostings() {
     let search = document.getElementById('searchInput');
@@ -158,18 +111,41 @@ function searchPostings() {
  * opening the detail view of pokemon and add overflow:hidden to body
  */
 function openDetailView(i) {
+    let values = loadDetailsData(i);
+    document.getElementById('page-body').classList.add('no-overflow');
+    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(values[3], values[0], values[1], values[2], i, values[4], values[5], values[6]);
+    renderPokemonTypeDetail(pokemons[i], i);
+    fillStatBar(pokemons[i]['stats']);
+    loadAbilities(pokemons[i], i);
+}
+
+
+/**
+ * loading pokemon detail data from api and returning an array
+ */
+function loadDetailsData(i) {
     let pokemonType = pokemons[i]['types'][0]['type']['name'];
     let pokemonImage = pokemons[i]['sprites']['other']['home']['front_default'];
     let pokemonId = pokemons[i]['id'];
     let pokemonName = pokemons[i]['name'];
-    let pokemonBg = matchTypeBackground(pokemonType);
     let pokemonXp = pokemons[i]['base_experience'];
     let pokemonWeight = pokemons[i]['weight'];
     let pokemonHeight = pokemons[i]['height'];
-    document.getElementById('page-body').classList.add('no-overflow');
-    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName, i, pokemonXp, pokemonWeight, pokemonHeight);
-    renderPokemonTypeDetail(pokemons[i], i);
-    fillStatBar(pokemons[i]['stats']);
+    return [pokemonImage, pokemonId, pokemonName, pokemonType, pokemonXp, pokemonWeight, pokemonHeight];
+}
+
+/**
+ * loading abilities from api 
+ */
+function loadAbilities(pokemon, i) {
+    let abilitiesContent = document.getElementById(`abilities-content-detail${i}`);
+    let pokemonAbilities = pokemon['abilities'];
+
+    for (let y = 0; y < pokemonAbilities.length; y++) {
+        let ability = pokemonAbilities[y];
+        let abilityName = ability['ability']['name'];
+        abilitiesContent.innerHTML += detailAbilitiesTemplate(abilityName);
+    }
 }
 
 
@@ -179,6 +155,33 @@ function openDetailView(i) {
 function closeDetailView() {
     document.getElementById('page-body').classList.remove('no-overflow');
     document.getElementById('detail-content').innerHTML = '';
+}
+
+
+/**
+ * rendering pokemon types in detail popup
+ */
+function renderPokemonTypeDetail(pokemon, i) {
+    let typeContent = document.getElementById(`type-content-detail${i}`);
+    let pokemonTypes = pokemon['types'];
+
+    for (let y = 0; y < pokemonTypes.length; y++) {
+        let type = pokemonTypes[y];
+        let typeName = type['type']['name'];
+        typeContent.innerHTML += detailTypeTemplate(typeName);
+    }
+}
+
+
+/**
+ * filling stat bars with values from base stats
+ */
+function fillStatBar(stats) {
+    for (let i = 0; i < stats.length; i++) {
+        let stat = stats[i]['base_stat'];
+        document.getElementById(`stat-bar${i}`).style.width = (stat / 3) + '%';
+        document.getElementById(`stat-text${i}`).innerHTML = `<span>${stat}</span>`;
+    }
 }
 
 
@@ -210,28 +213,4 @@ function underlineLink(object) {
     document.getElementById('details-nav-stats').classList.remove('underline');
     document.getElementById('details-nav-ability').classList.remove('underline');
     document.getElementById(`details-nav-${object}`).classList.add('underline');
-}
-
-
-/**
- * rendering pokemon types in detail popup
- */
-function renderPokemonTypeDetail(pokemon, i) {
-    let typeContent = document.getElementById(`type-content-detail${i}`);
-    let pokemonTypes = pokemon['types'];
-
-    for (let y = 0; y < pokemonTypes.length; y++) {
-        let type = pokemonTypes[y];
-        let typeName = type['type']['name'];
-        typeContent.innerHTML += detailTypeTemplate(typeName);
-    }
-}
-
-
-function fillStatBar(stats) {
-    for (let i = 0; i < stats.length; i++) {
-        let stat = stats[i]['base_stat'];
-        document.getElementById(`stat-bar${i}`).style.width = (stat / 3) + '%';
-        document.getElementById(`stat-text${i}`).innerHTML = `<span>${stat}</span>`;
-    }
 }

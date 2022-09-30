@@ -1,9 +1,9 @@
 /**
  * pokemon card template for main content
  */
-function cardPokemonTemplate(pokemonName, pokemonImage, pokemonBg, i, pokemonId) {
+function cardPokemonTemplate(pokemonName, pokemonImage, pokemonType, i, pokemonId) {
     return /*html*/`
-        <div class="card" style="background-color:${pokemonBg}" onclick="openDetailView(${i})">
+        <div class="card ${pokemonType}" onclick="openDetailView(${i})">
             <div class="card-left">
                 <p class="card-name">${pokemonName}</p>
                 <div id="type-content${i}"></div>
@@ -35,8 +35,18 @@ function cardTypeTemplate(typeName) {
  */
 function detailTypeTemplate(typeName) {
     return /*html*/`
-        <div class="card-type-detail">
+        <div class="card-type-detail ${typeName}">
             <span>${typeName}</span>
+        </div>
+    `;
+}
+
+
+function detailAbilitiesTemplate(abilityName) {
+    return /*html*/`
+        <div class="card-ability-detail">
+            <img class="arrow" src="./img/app/arrow.png">
+            <span>${abilityName}</span>
         </div>
     `;
 }
@@ -45,10 +55,10 @@ function detailTypeTemplate(typeName) {
 /**
  * pokemon detail view template
  */
-function detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName, i, pokemonXp, pokemonWeight, pokemonHeight) {
+function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName, i, pokemonXp, pokemonWeight, pokemonHeight) {
     return /*html*/`
         <div class="detail-bg" onclick="closeDetailView()">
-            <div class="detailPopup" style="background-color:${pokemonBg}" onclick="stopPropagate(event)">
+            <div class="detailPopup ${pokemonType}" onclick="stopPropagate(event)">
                 <div class="detail-top">
                     <img class="close-icon" src="./img/app/close_icon.png" alt="Close" onclick="closeDetailView()">
                     <!--<img class="ball-background-detail" src="./img/app/card_ball.png">-->
@@ -65,7 +75,7 @@ function detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName, 
                     <div class="detailsBox" id="detailsBox-info">
                         <table class="table-details">
                             <tr>
-                                <td class="table-details-name">type(s):</td>
+                                <td class="table-details-name">type:</td>
                                 <td class="table-details-amount"><div class="detail-type-box" id="type-content-detail${i}"></div></td>
                             </tr>
                             <tr>
@@ -112,7 +122,9 @@ function detailPokemonTemplate(pokemonBg, pokemonImage, pokemonId, pokemonName, 
 
                         </table>
                     </div>
-                    <div class="detailsBox d-none" id="detailsBox-ability">Fähigkeiten</div>
+                    <div class="detailsBox d-none" id="detailsBox-ability">
+                        <div class="detail-abilities-box" id="abilities-content-detail${i}"></div>
+                    </div>
                 </div>
             </div>
         </div>
