@@ -54,14 +54,15 @@ function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName
     return /*html*/ `
         <div class="detail-bg" onclick="closeDetailView()">
             <div class="detailPopup ${pokemonType}" onclick="stopPropagate(event)">
+            <img class="arrow-right" src="./img/app/arrow_circle_right.png" alt="Slide right">
                 <div class="detail-top">
                     <img class="close-icon" src="./img/app/close_icon.png" alt="Close" onclick="closeDetailView()">
-                    <!--<img class="ball-background-detail" src="./img/app/card_ball.png">-->
+                    <img class="ball-background-detail" src="./img/app/card_ball.png">
                     <p class="card-name-detail">${pokemonName}</p>
                     <span class="card-id-detail">#${pokemonId}</span>
-                    <img class="detail-image" src="${pokemonImage}" alt="Pokemon-Image">
                 </div>
                 <div class="detail-bottom">
+                    <img class="detail-image" src="${pokemonImage}" alt="Pokemon-Image">
                     <div class="detail-nav">
                         <span id="details-nav-info" class="detail-info nav-link underline" onclick="showDetailsBox('info')">infos</span>
                         <span id="details-nav-stats" class="detail-abilities nav-link" onclick="showDetailsBox('stats')">stats</span>
@@ -107,11 +108,11 @@ function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName
                                 <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar2" class="stat-bar-inner"></div></div><div id="stat-text2" class="stat-text"></div></td>
                             </tr>
                             <tr>
-                                <td class="table-details-name smaller-row">special-att.:</td>
+                                <td class="table-details-name smaller-row">sp.-att.:</td>
                                 <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar3" class="stat-bar-inner"></div></div><div id="stat-text3" class="stat-text"></div></td>
                             </tr>
                             <tr>
-                                <td class="table-details-name smaller-row">special-def.:</td>
+                                <td class="table-details-name smaller-row">sp.-def.:</td>
                                 <td class="table-details-amount bar-left"><div class="stat-bar-outer"><div id="stat-bar4" class="stat-bar-inner"></div></div><div id="stat-text4" class="stat-text"></div></td>
                             </tr>
                             <tr>
