@@ -2,7 +2,7 @@
  * declaration global variables
  */
 let pokemons = [];
-let loadingBoolean = true;
+let loadingBoolean = false;
 let offsetPokemon = 0;
 let maxPokemon = 20;
 let openDetailsObject = [
@@ -40,15 +40,16 @@ async function loadPokemon() {
  * loading more pokemons when page is scrolled to bottom
  */
 async function loadMorePokemon() {
-    loadingBoolean = false;
-    for (let i = offsetPokemon; i <= maxPokemon; i++) {
-        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        let response = await fetch(url);
-        let responseAsJson = await response.json();
-        pushPokemons(responseAsJson);
+    if (loadingBoolean == true) {
+        for (let i = offsetPokemon; i <= maxPokemon; i++) {
+            let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+            let response = await fetch(url);
+            let responseAsJson = await response.json();
+            pushPokemons(responseAsJson);
+        }
     }
     renderPokemonCard(pokemons);
-    loadingBoolean = true;
+    loadingBoolean = false;
 }
 
 /**
@@ -95,11 +96,11 @@ function renderPokemonType(pokemon, i) {
  */
 window.onscroll = function (ev) {
     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        loadingBoolean = true;
         offsetPokemon = pokemons.length + 1;
-        maxPokemon += 10;
-        if (loadingBoolean == true) {
-            setTimeout(loadMorePokemon, 1000);
-        }
+        maxPokemon += 20;
+
+        setTimeout(loadMorePokemon, 1000);
     }
 };
 
@@ -238,6 +239,9 @@ function slidePokemon(i) {
     openDetailView(i);
 }
 
+/**
+ * updating selected detail view in global variable for sliding
+ */
 function updateOpenDetailObject() {
     openDetailsObject = [
         {
@@ -256,4 +260,13 @@ function updateOpenDetailObject() {
             navClasses: document.getElementById('details-nav-devs').classList.toString(),
         },
     ];
+}
+
+function clickloadingButton() {
+    document.getElementById('loading-more').style.display = 'flex';
+    document.getElementById('loading-button').style.display = 'none';
+    loadingBoolean = true;
+    offsetPokemon = pokemons.length + 1;
+    maxPokemon += 20;
+    setTimeout(loadMorePokemon, 1000);
 }
