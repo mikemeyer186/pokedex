@@ -3,7 +3,7 @@
 }
 
 html {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     scroll-behavior: smooth;
 }
 
@@ -295,31 +295,27 @@ header {
     font-weight: 500;
 }
 
-.detail-info {
-    cursor: pointer;
-}
-
-.detail-abilities {
+.detail-link {
     cursor: pointer;
 }
 
 .nav-link::after {
-    content: "";
+    content: '';
     display: block;
     background-color: black;
     height: 3px;
     transform: scale(0);
-    transform-origin: bottom right;
+    transform-origin: right;
     transition: transform 225ms ease-in-out;
 }
 
 .nav-link:hover::after {
     transform: scaleX(1);
-    transform-origin: bottom left;
+    transform-origin: left;
 }
 
 .underline::after {
-    content: "";
+    content: '';
     display: block;
     transform: scaleX(1);
     background-color: black;
@@ -455,20 +451,27 @@ table {
     gap: 5px;
 }
 
-.arrow-right {
+.slider-arrow {
     position: absolute;
-    right: -80px;
-    top: 0;
+    top: -10%;
     bottom: 0;
     margin: auto;
     z-index: 300;
-    width: 60px;
+    width: 35px;
     opacity: 0.5;
     cursor: pointer;
     transition: all 225ms ease-in-out;
 }
 
-.arrow-right:hover {
+.arrow-right {
+    right: 10px;
+}
+
+.arrow-left {
+    left: 10px;
+}
+
+.slider-arrow:hover {
     opacity: 0.7;
     transition: all 225ms ease-in-out;
 }
@@ -615,6 +618,20 @@ table {
     .detail-bottom {
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
+    }
+
+    .slider-arrow {
+        top: 0;
+        bottom: 0;
+        width: 60px;
+    }
+
+    .arrow-left {
+        left: -80px;
+    }
+
+    .arrow-right {
+        right: -80px;
     }
 }
 

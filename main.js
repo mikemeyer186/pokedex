@@ -2,9 +2,26 @@
  * declaration global variables
  */
 let pokemons = [];
+let loadingBoolean = true;
 let offsetPokemon = 0;
 let maxPokemon = 20;
-
+let openDetailsObject = [
+    {
+        boxName: 'detailsBox-info',
+        boxClasses: 'detailsBox',
+        navClasses: 'detail-link nav-link underline',
+    },
+    {
+        boxName: 'detailsBox-stats',
+        boxClasses: 'detailsBox d-none',
+        navClasses: 'detail-link nav-link',
+    },
+    {
+        boxName: 'detailsBox-devs',
+        boxClasses: 'detailsBox d-none',
+        navClasses: 'detail-link nav-link',
+    },
+];
 
 /**
  * loading pokemon data from api
@@ -19,11 +36,11 @@ async function loadPokemon() {
     renderPokemonCard(pokemons);
 }
 
-
 /**
  * loading more pokemons when page is scrolled to bottom
  */
 async function loadMorePokemon() {
+    loadingBoolean = false;
     for (let i = offsetPokemon; i <= maxPokemon; i++) {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let response = await fetch(url);
@@ -31,8 +48,8 @@ async function loadMorePokemon() {
         pushPokemons(responseAsJson);
     }
     renderPokemonCard(pokemons);
+    loadingBoolean = true;
 }
-
 
 /**
  * pushing pokemons in array "pokemons"
@@ -40,7 +57,6 @@ async function loadMorePokemon() {
 function pushPokemons(pokemon) {
     pokemons.push(pokemon);
 }
-
 
 /**
  * rendering pokemon cards in main content
@@ -60,7 +76,6 @@ function renderPokemonCard(pokemons) {
     }
 }
 
-
 /**
  * rendering pokemon types in single cards
  */
@@ -75,18 +90,18 @@ function renderPokemonType(pokemon, i) {
     }
 }
 
-
 /**
  * event when page is scrolled down
  */
 window.onscroll = function (ev) {
-    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
         offsetPokemon = pokemons.length + 1;
         maxPokemon += 10;
-        setTimeout(loadMorePokemon, 1000);
+        if (loadingBoolean == true) {
+            setTimeout(loadMorePokemon, 1000);
+        }
     }
 };
-
 
 /**
  * searching for names on keyup in searchbar
@@ -101,11 +116,10 @@ function searchPostings() {
         pokemons = [];
         loadPokemon();
     } else {
-        result = pokemons.filter(e => e.name.includes(search));
+        result = pokemons.filter((e) => e.name.includes(search));
         renderPokemonCard(result);
     }
 }
-
 
 /**
  * opening the detail view of pokemon and add overflow:hidden to body
@@ -118,7 +132,6 @@ function openDetailView(i) {
     fillStatBar(pokemons[i]['stats']);
     loadAbilities(pokemons[i], i);
 }
-
 
 /**
  * loading pokemon detail data from api and returning an array
@@ -135,7 +148,7 @@ function loadDetailsData(i) {
 }
 
 /**
- * loading abilities from api 
+ * loading abilities from api
  */
 function loadAbilities(pokemon, i) {
     let abilitiesContent = document.getElementById(`abilities-content-detail${i}`);
@@ -148,7 +161,6 @@ function loadAbilities(pokemon, i) {
     }
 }
 
-
 /**
  * closing the detail view and remove overflow:hidden from body
  */
@@ -156,7 +168,6 @@ function closeDetailView() {
     document.getElementById('page-body').classList.remove('no-overflow');
     document.getElementById('detail-content').innerHTML = '';
 }
-
 
 /**
  * rendering pokemon types in detail popup
@@ -172,18 +183,16 @@ function renderPokemonTypeDetail(pokemon, i) {
     }
 }
 
-
 /**
  * filling stat bars with values from base stats
  */
 function fillStatBar(stats) {
     for (let i = 0; i < stats.length; i++) {
         let stat = stats[i]['base_stat'];
-        document.getElementById(`stat-bar${i}`).style.width = (stat / 3) + '%';
+        document.getElementById(`stat-bar${i}`).style.width = stat / 3 + '%';
         document.getElementById(`stat-text${i}`).innerHTML = `<span>${stat}</span>`;
     }
 }
-
 
 /**
  * stopping propagation of child elements
@@ -192,18 +201,16 @@ function stopPropagate(event) {
     event.stopPropagation();
 }
 
-
 /**
  * showing selected nav link in details popup
  */
 function showDetailsBox(object) {
     document.getElementById('detailsBox-info').classList.add('d-none');
     document.getElementById('detailsBox-stats').classList.add('d-none');
-    document.getElementById('detailsBox-ability').classList.add('d-none');
+    document.getElementById('detailsBox-devs').classList.add('d-none');
     document.getElementById(`detailsBox-${object}`).classList.remove('d-none');
     underlineLink(object);
 }
-
 
 /**
  * underline selected nav link in detail popup
@@ -211,6 +218,42 @@ function showDetailsBox(object) {
 function underlineLink(object) {
     document.getElementById('details-nav-info').classList.remove('underline');
     document.getElementById('details-nav-stats').classList.remove('underline');
-    document.getElementById('details-nav-ability').classList.remove('underline');
+    document.getElementById('details-nav-devs').classList.remove('underline');
     document.getElementById(`details-nav-${object}`).classList.add('underline');
+    updateOpenDetailObject();
+}
+
+/**
+ * sliding pokemon detail view left and right
+ */
+function slidePokemon(i) {
+    if (i == pokemons.length) {
+        i = 0;
+    } else {
+        if (i < 0) {
+            i = pokemons.length - 1;
+        }
+    }
+
+    openDetailView(i);
+}
+
+function updateOpenDetailObject() {
+    openDetailsObject = [
+        {
+            boxName: 'detailsBox-info',
+            boxClasses: document.getElementById('detailsBox-info').classList.toString(),
+            navClasses: document.getElementById('details-nav-info').classList.toString(),
+        },
+        {
+            boxName: 'detailsBox-stats',
+            boxClasses: document.getElementById('detailsBox-stats').classList.toString(),
+            navClasses: document.getElementById('details-nav-stats').classList.toString(),
+        },
+        {
+            boxName: 'detailsBox-devs',
+            boxClasses: document.getElementById('detailsBox-devs').classList.toString(),
+            navClasses: document.getElementById('details-nav-devs').classList.toString(),
+        },
+    ];
 }
