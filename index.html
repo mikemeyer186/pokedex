@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="./style.css" />
-        <link rel="stylesheet" href="./fonts.css" />
-        <script src="./main.js"></script>
-        <script src="./templates.js"></script>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>pokedex</title>
-    </head>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./fonts.css" />
+    <script src="./main.js"></script>
+    <script src="./templates.js"></script>
 
-    <body id="page-body" onload="loadPokemon()">
-        <div id="detail-content"></div>
+    <title>pokedex</title>
+</head>
 
-        <div class="page-wrapper">
-            <header>
-                <div class="header-left">
-                    <img class="logo" src="./img/app/logo.png" alt="Logo" />
-                    <p class="logo-text">Pokedex</p>
-                </div>
-                <div class="header-right">
-                    <div class="header-searchbar">
-                        <div class="searchbar__box">
-                            <img class="search-icon" src="./img/app/glasses.png" alt="Searchbar" />
-                            <input id="searchInput" class="searchbar" type="text" placeholder="Search for names" onkeyup="searchPostings()" />
-                        </div>
+<body id="page-body" onload="loadPokemon()">
+    <div id="detail-content"></div>
+
+    <div class="page-wrapper">
+        <header>
+            <div class="header-left">
+                <img class="logo" src="./img/app/logo.png" alt="Logo" />
+                <p class="logo-text">Pokedex</p>
+            </div>
+            <div class="header-right">
+                <div class="header-searchbar">
+                    <div class="searchbar__box">
+                        <img class="search-icon" src="./img/app/glasses.png" alt="Searchbar" />
+                        <input id="searchInput" class="searchbar" type="text" placeholder="Search for names"
+                            onkeyup="searchPostings()" />
                     </div>
                 </div>
-            </header>
-
-            <div id="card-content"></div>
-
-            <button id="loading-button" onclick="clickloadingButton()">load more Pokemons</button>
-
-            <div id="loading-more">
-                <div class="loader"></div>
-                <span>loading Pokemons</span>
             </div>
+        </header>
+
+        <div id="card-content"></div>
+
+        <button id="loading-button" onclick="clickloadingButton()">load more Pokemons</button>
+
+        <div id="loading-more">
+            <div class="loader"></div>
+            <span>loading Pokemons</span>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
