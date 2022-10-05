@@ -572,6 +572,71 @@ table {
 }
 
 /* responsive section */
+@media (max-height: 350px) {
+
+    .table-details-amount,
+    .table-details-name {
+        font-size: 12px !important;
+    }
+
+    .card-ability-detail,
+    .card-type-detail {
+        font-size: 12px !important;
+    }
+
+    .detail-abilities-box {
+        gap: 0px;
+    }
+}
+
+@media (max-height: 550px) {
+    .detail-image {
+        display: none;
+    }
+
+    .detail-top {
+        height: 15%;
+    }
+
+    .detail-bottom {
+        height: 85%;
+    }
+
+    .detail-nav {
+        padding-top: 20px;
+        font-size: 14px;
+    }
+
+    .detailsBox {
+        padding-top: 10px !important;
+        font-size: 14px !important;
+    }
+
+    .ball-background-detail {
+        display: none;
+    }
+
+    .table-details-amount,
+    .table-details-name {
+        font-size: 14px;
+    }
+
+    .card-ability-detail,
+    .card-type-detail {
+        font-size: 14px;
+    }
+
+    .detail-abilities-box {
+        gap: 2px;
+    }
+}
+
+@media (max-height: 650px) {
+    .detailPopup {
+        height: 100% !important;
+    }
+}
+
 @media (min-height: 800px) {
     .detail-image {
         width: 290px;

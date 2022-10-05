@@ -34,9 +34,9 @@ async function loadPokemon() {
         let responseAsJson = await response.json();
         pushPokemons(responseAsJson);
     }
-    searchResult = pokemons;
     renderPokemonCard(pokemons);
     toggleLoadingObjects();
+    searchResult = pokemons;
 }
 
 
@@ -99,34 +99,30 @@ function renderPokemonType(pokemon, i) {
 
 
 /**
- * event when page is scrolled down
- */
-/*window.onscroll = function (ev) {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) {
-        offsetPokemon = pokemons.length + 1;
-        maxPokemon += 20;
-        setTimeout(loadMorePokemon, 1000);
-    }
-};*/
-
-
-/**
  * searching for names on keyup in searchbar
  */
 function searchPostings() {
     let search = document.getElementById('searchInput');
     search = search.value.toLowerCase().trim();
 
-    if (search == '') {
+    if (!search) {
         document.getElementById('loading-more').classList.remove('d-none');
-        pokemons = [];
-        searchResult = [];
+        clearArrays();
         loadPokemon();
     } else {
         document.getElementById('loading-button').classList.add('d-none');
         searchResult = pokemons.filter((e) => e.name.includes(search));
         renderPokemonCard(searchResult);
     }
+}
+
+
+/**
+ * clearing arrays when search value is null to load new array
+ */
+function clearArrays() {
+    pokemons = [];
+    searchResult = [];
 }
 
 
@@ -287,7 +283,7 @@ function clickLoadingButton() {
     toggleLoadingObjects();
     offsetPokemon = pokemons.length + 1;
     maxPokemon += 20;
-    setTimeout(loadMorePokemon, 2000);
+    setTimeout(loadMorePokemon, 1000);
 }
 
 
