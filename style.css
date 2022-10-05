@@ -18,7 +18,7 @@ body {
     background-size: cover;
     background-position: 44% 50%;
     background-attachment: fixed;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 #card-content {
@@ -196,7 +196,7 @@ header {
 }
 
 #loading-button {
-    display: none;
+    display: block;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     border: none;
@@ -705,13 +705,5 @@ table {
     .detailPopup {
         width: 25%;
         height: 80%;
-    }
-
-    #loading-button {
-        display: block;
-    }
-
-    #loading-more {
-        display: none;
     }
 }
