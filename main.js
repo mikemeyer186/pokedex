@@ -1,5 +1,5 @@
 /**
- * declaration global variables
+ * global variables
  */
 let pokemons = [];
 let searchResult = [];
@@ -34,14 +34,14 @@ async function loadPokemon() {
         let responseAsJson = await response.json();
         pushPokemons(responseAsJson);
     }
+    searchResult = pokemons;
     renderPokemonCard(pokemons);
     toggleLoadingObjects();
-    searchResult = pokemons;
 }
 
 
 /**
- * loading more pokemons when page is scrolled to bottom
+ * loading more pokemons when clicking button
  */
 async function loadMorePokemon() {
     for (let i = offsetPokemon; i <= maxPokemon; i++) {
@@ -99,30 +99,29 @@ function renderPokemonType(pokemon, i) {
 
 
 /**
- * searching for names on keyup in searchbar
+ * searching for id or name on keyup in searchbar
  */
 function searchPostings() {
     let search = document.getElementById('searchInput');
     search = search.value.toLowerCase().trim();
 
     if (!search) {
-        document.getElementById('loading-more').classList.remove('d-none');
-        clearArrays();
-        loadPokemon();
+        document.getElementById('loading-button').classList.remove('d-none');
+        clearSearch();
+        renderPokemonCard(pokemons);
     } else {
         document.getElementById('loading-button').classList.add('d-none');
-        searchResult = pokemons.filter((e) => e.name.includes(search));
+        searchResult = pokemons.filter((e) => e.id.toString().includes(search) || e.name.includes(search));
         renderPokemonCard(searchResult);
     }
 }
 
 
 /**
- * clearing arrays when search value is null to load new array
+ * setting serarchResult to pokemons array when search value is null
  */
-function clearArrays() {
-    pokemons = [];
-    searchResult = [];
+function clearSearch() {
+    searchResult = pokemons;
 }
 
 
@@ -140,7 +139,7 @@ function openDetailView(i) {
 
 
 /**
- * loading pokemon detail data from api and returning an array
+ * loading pokemon detail data from api and returning array
  */
 function loadDetailsData(i) {
     let pokemonType = searchResult[i]['types'][0]['type']['name'];
@@ -248,6 +247,7 @@ function slidePokemon(i) {
             i = searchResult.length - 1;
         }
     }
+
     openDetailView(i);
 }
 
@@ -277,7 +277,7 @@ function updateOpenDetailObject() {
 
 
 /**
- * load more pokemons when clicking button
+ * loading more pokemons when clicking button
  */
 function clickLoadingButton() {
     toggleLoadingObjects();
@@ -287,6 +287,9 @@ function clickLoadingButton() {
 }
 
 
+/**
+ * toggeling between loading button and load-spinner
+ */
 function toggleLoadingObjects() {
     document.getElementById('loading-more').classList.toggle('d-none');
     document.getElementById('loading-button').classList.toggle('d-none');

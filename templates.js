@@ -17,6 +17,7 @@ function cardPokemonTemplate(pokemonName, pokemonImage, pokemonType, i, pokemonI
     `;
 }
 
+
 /**
  * pokemon type template for pokemon cards
  */
@@ -27,6 +28,7 @@ function cardTypeTemplate(typeName) {
         </div>
     `;
 }
+
 
 /**
  * pokemon type template for pokemon detail view
@@ -39,6 +41,10 @@ function detailTypeTemplate(typeName) {
     `;
 }
 
+
+/**
+ * ability template for pokemon detail view
+ */
 function detailAbilitiesTemplate(abilityName) {
     return /*html*/ `
         <div class="card-ability-detail">
@@ -46,6 +52,7 @@ function detailAbilitiesTemplate(abilityName) {
         </div>
     `;
 }
+
 
 /**
  * pokemon detail view template
