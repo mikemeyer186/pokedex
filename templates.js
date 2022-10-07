@@ -57,26 +57,26 @@ function detailAbilitiesTemplate(abilityName) {
 /**
  * pokemon detail view template
  */
-function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName, i, pokemonXp, pokemonWeight, pokemonHeight) {
+function detailPokemonTemplate(pokemonData, i) {
     return /*html*/ `
         <div class="detail-bg" onclick="closeDetailView()">
-            <div class="detailPopup ${pokemonType}" onclick="stopPropagate(event)">
+            <div class="detailPopup ${pokemonData.pokemonType}" onclick="stopPropagate(event)">
             <img class="slider-arrow arrow-right" src="./img/app/arrow_circle_right.png" alt="Slide right" onclick="slidePokemon(${i} + 1)">
             <img class="slider-arrow arrow-left" src="./img/app/arrow_circle_left.png" alt="Slide left" onclick="slidePokemon(${i} - 1)">
                 <div class="detail-top">
                     <img class="close-icon" src="./img/app/close_icon.png" alt="Close" onclick="closeDetailView()">
                     <img class="ball-background-detail" src="./img/app/card_ball.png">
-                    <p class="card-name-detail">${pokemonName}</p>
-                    <span class="card-id-detail">#${pokemonId}</span>
+                    <p class="card-name-detail">${pokemonData.pokemonName}</p>
+                    <span class="card-id-detail">#${pokemonData.pokemonId}</span>
                 </div>
                 <div class="detail-bottom">
-                    <img class="detail-image" src="${pokemonImage}" alt="Pokemon-Image">
+                    <img class="detail-image" src="${pokemonData.pokemonImage}" alt="Pokemon-Image">
                     <div class="detail-nav">
-                        <span id="details-nav-info" class="${openDetailsObject[0]['navClasses']}" onclick="showDetailsBox('info')">infos</span>
-                        <span id="details-nav-stats" class="${openDetailsObject[1]['navClasses']}" onclick="showDetailsBox('stats')">stats</span>
-                        <span id="details-nav-devs" class="${openDetailsObject[2]['navClasses']}" onclick="showDetailsBox('devs')">devs</span>
+                        <span id="details-nav-info" class="${openDetailsObject.detailsBoxInfo.navClasses}" onclick="showDetailsBox('info')">infos</span>
+                        <span id="details-nav-stats" class="${openDetailsObject.detailsBoxStats.navClasses}" onclick="showDetailsBox('stats')">stats</span>
+                        <span id="details-nav-devs" class="${openDetailsObject.detailsBoxDevs.navClasses}" onclick="showDetailsBox('devs')">devs</span>
                     </div>
-                    <div class="${openDetailsObject[0]['boxClasses']}" id="detailsBox-info">
+                    <div class="${openDetailsObject.detailsBoxInfo.boxClasses}" id="detailsBox-info">
                         <table class="table-details">
                             <tr>
                                 <td class="table-details-name">type:</td>
@@ -84,15 +84,15 @@ function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName
                             </tr>
                             <tr>
                                 <td class="table-details-name">xp:</td>
-                                <td class="table-details-amount">${pokemonXp}</td>
+                                <td class="table-details-amount">${pokemonData.pokemonXp}</td>
                             </tr>
                             <tr>
                                 <td class="table-details-name">weight:</td>
-                                <td class="table-details-amount">${pokemonWeight}</td>
+                                <td class="table-details-amount">${pokemonData.pokemonWeight}</td>
                             </tr>
                             <tr>
                                 <td class="table-details-name">heigth:</td>
-                                <td class="table-details-amount">${pokemonHeight}</td>
+                                <td class="table-details-amount">${pokemonData.pokemonHeight}</td>
                             </tr>
                             <tr>
                                 <td class="table-details-name">abilities:</td>
@@ -101,7 +101,7 @@ function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName
                         </table>
                         
                     </div>
-                    <div class="${openDetailsObject[1]['boxClasses']}" id="detailsBox-stats">
+                    <div class="${openDetailsObject.detailsBoxStats.boxClasses}" id="detailsBox-stats">
                         <table>
                             <tr>
                                 <td class="table-details-name smaller-row">hp:</td>
@@ -130,7 +130,7 @@ function detailPokemonTemplate(pokemonType, pokemonImage, pokemonId, pokemonName
 
                         </table>
                     </div>
-                    <div class="${openDetailsObject[2]['boxClasses']}" id="detailsBox-devs">
+                    <div class="${openDetailsObject.detailsBoxDevs.boxClasses}" id="detailsBox-devs">
                     </div>
                 </div>
             </div>

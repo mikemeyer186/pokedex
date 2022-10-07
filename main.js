@@ -1,27 +1,21 @@
-/**
- * global variables
- */
 let pokemons = [];
 let searchResult = [];
 let offsetPokemon = 0;
 let maxPokemon = 20;
-let openDetailsObject = [
-    {
-        boxName: 'detailsBox-info',
+let openDetailsObject = {
+    detailsBoxInfo: {
         boxClasses: 'detailsBox',
         navClasses: 'detail-link nav-link underline',
     },
-    {
-        boxName: 'detailsBox-stats',
+    detailsBoxStats: {
         boxClasses: 'detailsBox d-none',
         navClasses: 'detail-link nav-link',
     },
-    {
-        boxName: 'detailsBox-devs',
+    detailsBoxDevs: {
         boxClasses: 'detailsBox d-none',
         navClasses: 'detail-link nav-link',
     },
-];
+};
 
 
 /**
@@ -101,7 +95,7 @@ function renderPokemonType(pokemon, i) {
 /**
  * searching for id or name on keyup in searchbar
  */
-function searchPostings() {
+function searchPokemon() {
     let search = document.getElementById('searchInput');
     search = search.value.toLowerCase().trim();
 
@@ -131,7 +125,7 @@ function clearSearch() {
 function openDetailView(i) {
     let values = loadDetailsData(i);
     document.getElementById('page-body').classList.add('no-overflow');
-    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(values[3], values[0], values[1], values[2], i, values[4], values[5], values[6]);
+    document.getElementById('detail-content').innerHTML = detailPokemonTemplate(values, i);
     renderPokemonTypeDetail(searchResult[i], i);
     fillStatBar(searchResult[i]['stats']);
     loadAbilities(searchResult[i], i);
@@ -142,14 +136,16 @@ function openDetailView(i) {
  * loading pokemon detail data from api and returning array
  */
 function loadDetailsData(i) {
-    let pokemonType = searchResult[i]['types'][0]['type']['name'];
-    let pokemonImage = searchResult[i]['sprites']['other']['home']['front_default'];
-    let pokemonId = searchResult[i]['id'];
-    let pokemonName = searchResult[i]['name'];
-    let pokemonXp = searchResult[i]['base_experience'];
-    let pokemonWeight = searchResult[i]['weight'];
-    let pokemonHeight = searchResult[i]['height'];
-    return [pokemonImage, pokemonId, pokemonName, pokemonType, pokemonXp, pokemonWeight, pokemonHeight];
+    let detailsData = {
+        pokemonType: searchResult[i]['types'][0]['type']['name'],
+        pokemonImage: searchResult[i]['sprites']['other']['home']['front_default'],
+        pokemonId: searchResult[i]['id'],
+        pokemonName: searchResult[i]['name'],
+        pokemonXp: searchResult[i]['base_experience'],
+        pokemonWeight: searchResult[i]['weight'],
+        pokemonHeight: searchResult[i]['height'],
+    };
+    return detailsData;
 }
 
 
@@ -256,23 +252,12 @@ function slidePokemon(i) {
  * updating selected detail view in global variable for sliding
  */
 function updateOpenDetailObject() {
-    openDetailsObject = [
-        {
-            boxName: 'detailsBox-info',
-            boxClasses: document.getElementById('detailsBox-info').classList.toString(),
-            navClasses: document.getElementById('details-nav-info').classList.toString(),
-        },
-        {
-            boxName: 'detailsBox-stats',
-            boxClasses: document.getElementById('detailsBox-stats').classList.toString(),
-            navClasses: document.getElementById('details-nav-stats').classList.toString(),
-        },
-        {
-            boxName: 'detailsBox-devs',
-            boxClasses: document.getElementById('detailsBox-devs').classList.toString(),
-            navClasses: document.getElementById('details-nav-devs').classList.toString(),
-        },
-    ];
+    openDetailsObject.detailsBoxInfo.boxClasses = document.getElementById('detailsBox-info').classList.toString();
+    openDetailsObject.detailsBoxInfo.navClasses = document.getElementById('details-nav-info').classList.toString();
+    openDetailsObject.detailsBoxStats.boxClasses = document.getElementById('detailsBox-stats').classList.toString();
+    openDetailsObject.detailsBoxStats.navClasses = document.getElementById('details-nav-stats').classList.toString();
+    openDetailsObject.detailsBoxDevs.boxClasses = document.getElementById('detailsBox-devs').classList.toString();
+    openDetailsObject.detailsBoxDevs.navClasses = document.getElementById('details-nav-devs').classList.toString();
 }
 
 
